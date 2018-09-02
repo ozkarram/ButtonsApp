@@ -21,7 +21,7 @@ public class ButtonsApplication extends Application {
         super.onCreate();
         mInstance = this;
         component = DaggerAppComponent.builder()
-                .generalModule(new GeneralModule(this))
+                .generalModule(new GeneralModule())
                 .build();
     }
 
