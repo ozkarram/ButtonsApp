@@ -7,4 +7,5 @@
     <string name="apple_button_toast">This is an Apple button!</string>
     <string name="google_button_toast">This is a Google button!</string>
     <string name="yahoo_button_toast">This is a Yahoo button!</string>
+    <string name="get_buttons_error_text">Something went wrong getting buttons info</string>
 </resources>
