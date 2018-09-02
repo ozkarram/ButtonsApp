@@ -4,7 +4,8 @@ import java.util.List;
 
 import alvarez.oscar.buttonsapp.models.ButtonObject;
 import alvarez.oscar.buttonsapp.repositories.ButtonRepository;
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Oscar Álvarez on 01/09/18.

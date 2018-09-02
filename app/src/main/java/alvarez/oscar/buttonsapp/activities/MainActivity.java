@@ -7,7 +7,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,7 +17,8 @@ import alvarez.oscar.buttonsapp.adapters.ButtonsAdapter;
 import alvarez.oscar.buttonsapp.databinding.ActivityMainBinding;
 import alvarez.oscar.buttonsapp.models.ButtonObject;
 import alvarez.oscar.buttonsapp.presenters.MainPresenter;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * Created by Oscar Álvarez on 01/09/18.
@@ -32,25 +32,34 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-    CompositeSubscription mSubscription;
+    CompositeDisposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButtonsApplication.getComponent().inject(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        disposable = new CompositeDisposable();
         showLoader(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        List<ButtonObject> list = new ArrayList<>();
-        list.add(new ButtonObject(ButtonObject.APPLE_TYPE, "Hi"));
-        list.add(new ButtonObject(ButtonObject.YAHOO_TYPE, null));
-        list.add(new ButtonObject(ButtonObject.GOOGLE_TYPE, null));
-        list.add(new ButtonObject(ButtonObject.APPLE_TYPE, null));
-        showButtons(list);
+        disposable.add(mPresenter.getButtons()
+                .subscribe(this::showButtons,
+                        this::showErrorView));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        disposable.clear();
+    }
+
+    private void showErrorView(Throwable throwable) {
+        binding.errorView.getViewStub().inflate();
+        showLoader(false);
     }
 
     private void showLoader(boolean isLoading) {
