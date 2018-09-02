@@ -76,6 +76,11 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         return buttonObjects.size();
     }
 
+    public void clear() {
+        buttonObjects.clear();
+        notifyDataSetChanged();
+    }
+
     class ButtonViewHolder extends RecyclerView.ViewHolder {
 
         View view;

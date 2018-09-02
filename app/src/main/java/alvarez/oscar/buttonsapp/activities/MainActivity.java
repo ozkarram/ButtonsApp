@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     CompositeDisposable disposable;
 
+    ButtonsAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getButtonsData();
+        binding.swipeContainer.setOnRefreshListener(() -> {
+            disposable.clear();
+            adapter.clear();
+            getButtonsData();
+            binding.swipeContainer.setRefreshing(false);
+
+        });
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_red_light);
+
+    }
+
+    private void getButtonsData() {
         disposable.add(mPresenter.getButtons()
                 .subscribe(this::showButtons,
                         this::showErrorView));
@@ -74,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.addItemDecoration(
                 new DividerItemDecoration(binding.recyclerView.getContext(),
                         DividerItemDecoration.VERTICAL));
-        ButtonsAdapter adapter = new ButtonsAdapter(buttonObjects);
+        adapter = new ButtonsAdapter(buttonObjects);
         binding.recyclerView.setAdapter(adapter);
     }
 }
