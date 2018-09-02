@@ -2,6 +2,8 @@ package alvarez.oscar.buttonsapp.models;
 
 import android.support.annotation.IntDef;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
@@ -21,12 +23,17 @@ public class ButtonObject {
     public @interface ButtonObjectType {
     }
 
-    public @ButtonObjectType
-    int type;
+    @JsonProperty("type")
+    public int type;
 
+    @JsonProperty("text")
     public String text;
 
-    public ButtonObject(@ButtonObjectType int type, String text) {
+    public ButtonObject() {
+
+    }
+
+    public ButtonObject(int type, String text) {
         this.type = type;
         this.text = text;
     }
