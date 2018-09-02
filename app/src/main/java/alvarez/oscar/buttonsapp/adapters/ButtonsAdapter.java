@@ -80,7 +80,7 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
 
         View view;
 
-        public ButtonViewHolder(@Nullable View itemView) {
+        public ButtonViewHolder(View itemView) {
             super(itemView);
             view = itemView;
         }

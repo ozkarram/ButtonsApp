@@ -3,7 +3,10 @@ package alvarez.oscar.buttonsapp.repositories;
 import java.util.List;
 
 import alvarez.oscar.buttonsapp.models.ButtonObject;
-import rx.Observable;
+import alvarez.oscar.buttonsapp.services.ButtonService;
+import alvarez.oscar.buttonsapp.utils.RxHelper;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Oscar Álvarez on 01/09/18.
@@ -11,7 +14,13 @@ import rx.Observable;
  */
 public class ButtonRepository {
 
+    private ButtonService mService;
+
+    public ButtonRepository(ButtonService service) {
+        mService = service;
+    }
+
     public Observable<List<ButtonObject>> getButtons() {
-        return null;
+        return RxHelper.IOAndMainthreadSchedule(mService.getButtons());
     }
 }
